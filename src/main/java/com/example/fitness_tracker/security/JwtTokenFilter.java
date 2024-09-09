@@ -10,12 +10,12 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Service
+@Component
 public class JwtTokenFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
 
@@ -29,7 +29,8 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
         final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (header == null || !header.contains("Bearer")) {
-            throw new AccessDeniedException("Access Denied");
+            filterChain.doFilter(request, response);
+            return;
         }
 
         final String token = jwtService.resolveToken(header);

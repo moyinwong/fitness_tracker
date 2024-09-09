@@ -39,7 +39,6 @@ public class UserController {
                 loginDto.password());
 
         Authentication result = authenticationManager.authenticate(request);
-        log.error("error");
         String accessToken = jwtService.createToken(loginDto.username());
         return new LoginSuccessResponse(accessToken);
     }
@@ -49,8 +48,8 @@ public class UserController {
         return userService.findById(id);
     }
 
-    @PostMapping()
-    public LoginSuccessResponse createUser(@RequestBody CreateUserDto userDto) {
+    @PostMapping("/signup")
+    public User createUser(@RequestBody CreateUserDto userDto) {
         User user = null;
         try {
             user = userService.findByUsername(userDto.username());
@@ -62,7 +61,7 @@ public class UserController {
             throw new AccessDeniedException("Forbidden");
         }
 
-        return new LoginSuccessResponse("something");
+        return userService.save(userService.createDtoToUser(userDto));
     }
 
     @PostMapping("/{id}/workout")

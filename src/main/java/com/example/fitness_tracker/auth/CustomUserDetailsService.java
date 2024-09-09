@@ -7,9 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class CustomUserDetailsService implements UserDetailsService {
     private static final Logger log = LoggerFactory.getLogger(CustomUserDetailsService.class);
     private final UserRepository userRepository;

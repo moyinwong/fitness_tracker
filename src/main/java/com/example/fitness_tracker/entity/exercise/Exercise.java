@@ -18,7 +18,7 @@ public class Exercise {
     @Column(name = "name", nullable = false)
     String name;
 
-    @OneToMany(mappedBy = "exercise", cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "exercise", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     List<ExerciseSet> exerciseSets;
 
